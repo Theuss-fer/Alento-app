@@ -1,6 +1,7 @@
 import {StyleSheet, Text} from 'react-native';
 import Card from '../components/Card';
 import Screen from './Screen';
+import {useTradition} from '../context/TraditionContext';
 import {colors, spacing} from '../theme';
 
 const TRADICOES = [
@@ -9,6 +10,8 @@ const TRADICOES = [
 ];
 
 export default function TradicaoScreen() {
+  const {setTradicao} = useTradition();
+
   return (
     <Screen
       titulo="Bem-vindo ao Alento"
@@ -19,7 +22,7 @@ export default function TradicaoScreen() {
           key={tradicao.id}
           titulo={tradicao.nome}
           sub={tradicao.sub}
-          onPress={() => console.log(`Tradição escolhida: ${tradicao.nome}`)}
+          onPress={() => setTradicao(tradicao.id)}
         />
       ))}
       <Text style={styles.aviso}>
