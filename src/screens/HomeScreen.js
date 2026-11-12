@@ -1,7 +1,7 @@
 import Card from '../components/Card';
 import Screen from './Screen';
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
   return (
     <Screen
       titulo="Alento"
@@ -10,7 +10,7 @@ export default function HomeScreen() {
       <Card
         titulo="Ler a Bíblia"
         sub="Escolha um livro e um capítulo"
-        onPress={() => console.log('Abrir a Bíblia')}
+        onPress={() => navigation.navigate('Livros')}
       />
     </Screen>
   );

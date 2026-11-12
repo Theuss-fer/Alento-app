@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useTradition} from '../context/TraditionContext';
 import {colors} from '../theme';
 import HomeScreen from '../screens/HomeScreen';
+import LivrosScreen from '../screens/LivrosScreen';
 import TradicaoScreen from '../screens/TradicaoScreen';
 
 const Stack = createNativeStackNavigator();
@@ -19,11 +20,17 @@ export default function RootNavigator() {
   }
 
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator screenOptions={{
+      headerShown: false,
+      contentStyle: {backgroundColor: colors.background}
+    }}>
       {!tradicao ? (
         <Stack.Screen name="Tradicao" component={TradicaoScreen} />
       ) : (
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <>
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Livros" component={LivrosScreen} />
+        </>
       )}
     </Stack.Navigator>
   );

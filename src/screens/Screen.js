@@ -1,11 +1,16 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, spacing } from '../theme';
 
-export default function Screen({titulo, subtitulo, children}) {
+export default function Screen({titulo, subtitulo, children, onBack}) {
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
       <View style={styles.header}>
+        {onBack ? (
+          <TouchableOpacity onPress={onBack}>
+            <Text style={styles.back}>‹ Voltar</Text>
+          </TouchableOpacity>
+        ) : null}
         <Text style={styles.titulo}>{titulo}</Text>
         {subtitulo ? <Text style={styles.subtitulo}>{subtitulo}</Text> : null}
       </View>
@@ -24,6 +29,11 @@ const styles = StyleSheet.create({
   header: {
     paddingHorizontal: spacing.large,
     paddingVertical: spacing.medium,
+  },
+  back: {
+    color: colors.primary,
+    fontSize: 16,
+    marginBottom: spacing.small,
   },
   titulo: {
     color: colors.text,
