@@ -6,6 +6,16 @@ import {colors} from './src/theme';
 import RootNavigator from './src/navigation/RootNavigator';
    import AsyncStorage from '@react-native-async-storage/async-storage';
    AsyncStorage.removeItem('@alento/preferencias');
+import {livrosDaTradicao} from './src/data/livros';
+
+const ev = livrosDaTradicao('evangelica');
+const ca = livrosDaTradicao('catolica');
+console.log(ev.length, ca.length); // esperado: 66 73
+console.log(
+  ev.filter((l) => l.testamento === 'AT').length, // 39
+  ca.filter((l) => l.testamento === 'AT').length, // 46
+  ca.filter((l) => l.testamento === 'NT').length, // 27
+);
 
 export default function App() {
   return (
