@@ -1,0 +1,7 @@
+{
+  "livro": "salmos",
+  "capitulos": {
+    "1": ["[Exemplo] Versículo 1.", "[Exemplo] Versículo 2.", "[Exemplo] Versículo 3."],
+    "23": ["[Exemplo] Versículo 1.", "[Exemplo] Versículo 2."]
+  }
+}

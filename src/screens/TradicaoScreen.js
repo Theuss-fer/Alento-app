@@ -1,22 +1,10 @@
 import {StyleSheet, Text} from 'react-native';
 import Card from '../components/Card';
 import {livrosDaTradicao} from '../data/livros';
+import {TRADICOES} from '../data/versoes';
 import Screen from './Screen';
 import {useTradition} from '../context/TraditionContext';
 import {colors, spacing} from '../theme';
-
-const TRADICOES = [
-  {
-    id: 'evangelica',
-    nome: 'Evangélica',
-    sub: `${livrosDaTradicao('evangelica').length} livros`,
-  },
-  {
-    id: 'catolica',
-    nome: 'Católica',
-    sub: `${livrosDaTradicao('catolica').length} livros`,
-  },
-];
 
 export default function TradicaoScreen() {
   const {setTradicao} = useTradition();
@@ -30,7 +18,7 @@ export default function TradicaoScreen() {
         <Card
           key={tradicao.id}
           titulo={tradicao.nome}
-          sub={tradicao.sub}
+          sub={`${livrosDaTradicao(tradicao.id).length} livros`}
           onPress={() => setTradicao(tradicao.id)}
         />
       ))}

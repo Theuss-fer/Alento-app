@@ -30,7 +30,9 @@ export default function LivrosScreen({navigation}) {
               <Card
                 key={livro.id}
                 titulo={livro.nome}
-                onPress={() => console.log(livro.id)}
+                onPress={() =>
+                  navigation.navigate('Capitulos', {livroId: livro.id})
+                }
               />
             ))}
         </Fragment>

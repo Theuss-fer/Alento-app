@@ -1,0 +1,6 @@
+{
+  "livro": "sabedoria",
+  "capitulos": {
+    "1": ["[Exemplo] Versículo 1.", "[Exemplo] Versículo 2.", "[Exemplo] Versículo 3."]
+  }
+}

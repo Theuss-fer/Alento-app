@@ -8,6 +8,7 @@ export default function Card({titulo, sub, onPress}) {
 			onPress={onPress}
 			activeOpacity={0.8}
 			accessibilityRole="button"
+			acccessibilityLabel={'Capítulo ${capitulo}'}
 		>
 			<Text style={styles.titulo}>{titulo}</Text>
 			{sub ? <Text style={styles.sub}>{sub}</Text> : null}
