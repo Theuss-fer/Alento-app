@@ -4,7 +4,7 @@ import {useTradition} from '../context/TraditionContext';
 import {livrosDaTradicao} from '../data/livros';
 import {VERSOES, versoesDaTradicao} from '../data/versoes';
 import {getCapitulo, getCapitulos} from '../services/bibleService';
-import {colors, fonts, spacing} from '../theme';
+import {colors, fonts, spacing, radius} from '../theme';
 import Screen from './Screen';
 
 export default function LeituraScreen({navigation, route}) {
@@ -15,7 +15,7 @@ export default function LeituraScreen({navigation, route}) {
   const versao = VERSOES.find((item) => item.id === versaoId);
   const [capitulos, setCapitulos] = useState([]);
   const [capitulo, setCapitulo] = useState(capituloInicial);
-  const [versiculos, setVersiculos] = useState(null);
+  const [versiculos, setVersiculos] = useState(undefined);
 
   useEffect(() => {
     let ativo = true;
@@ -60,7 +60,7 @@ export default function LeituraScreen({navigation, route}) {
       subtitulo={versao ? `${versao.nome} (${versao.sigla})` : ''}
       onBack={() => navigation.goBack()}
     >
-      {versiculos === null ? (
+      {versiculos === undefined ? null : versiculos === null ? (
         <Text style={styles.aviso}>Capítulo indisponível nesta versão.</Text>
       ) : (
         versiculos.map((v) => (
@@ -74,8 +74,10 @@ export default function LeituraScreen({navigation, route}) {
         <TouchableOpacity
           style={[styles.botao, anterior === null && styles.botaoDesabilitado]}
           disabled={anterior === null}
+          accessibilityRole="button"
+          accessibilityLabel="Capítulo anterior"
           onPress={() => {
-            setVersiculos(null);
+            setVersiculos(undefined);
             setCapitulo(anterior);
           }}
         >
@@ -84,8 +86,10 @@ export default function LeituraScreen({navigation, route}) {
         <TouchableOpacity
           style={[styles.botao, proximo === null && styles.botaoDesabilitado]}
           disabled={proximo === null}
+          accessibilityRole="button"
+          accessibilityLabel="Próximo capítulo"
           onPress={() => {
-            setVersiculos(null);
+            setVersiculos(undefined);
             setCapitulo(proximo);
           }}
         >
@@ -122,7 +126,7 @@ const styles = StyleSheet.create({
   },
   botao: {
     backgroundColor: colors.primary,
-    borderRadius: 10,
+    borderRadius: radius.small,
     paddingHorizontal: spacing.medium,
     paddingVertical: spacing.small,
   },
