@@ -6,6 +6,7 @@ import HomeScreen from '../screens/HomeScreen';
 import LivrosScreen from '../screens/LivrosScreen';
 import TradicaoScreen from '../screens/TradicaoScreen';
 import CapitulosScreen from '../screens/CapitulosScreen';
+import LeituraScreen from '../screens/LeituraScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ export default function RootNavigator() {
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Livros" component={LivrosScreen} />
           <Stack.Screen name="Capitulos" component={CapitulosScreen} />
+          <Stack.Screen name="Leitura" component={LeituraScreen} />
         </>
       )}
     </Stack.Navigator>

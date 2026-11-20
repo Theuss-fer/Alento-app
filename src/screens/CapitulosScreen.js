@@ -46,7 +46,9 @@ export default function CapitulosScreen({navigation, route}) {
             <TouchableOpacity
               key={capitulo}
               style={styles.botao}
-              onPress={() => console.log(capitulo)}
+              onPress={() =>
+                navigation.navigate('Leitura', {livroId, capitulo})
+              }
             >
               <Text style={styles.numero}>{capitulo}</Text>
             </TouchableOpacity>

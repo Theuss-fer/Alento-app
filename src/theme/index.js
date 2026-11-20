@@ -1,4 +1,4 @@
-
+import {Platform} from 'react-native';
 export const colors = {
 	onPrimary: '#FFFFFF',
 	background: '#F6F1E7',
@@ -23,3 +23,7 @@ export const radius = {
     medium: 14,
     large: 20,
 }
+
+export const fonts = {
+  verse: Platform.select({ios: 'Georgia', android: 'serif', default: 'serif'}),
+};
