@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useTradition} from '../context/TraditionContext';
 import {colors} from '../theme';
 import HomeScreen from '../screens/HomeScreen';
+import ConfigScreen from '../screens/ConfigScreen';
 import LivrosScreen from '../screens/LivrosScreen';
 import TradicaoScreen from '../screens/TradicaoScreen';
 import CapitulosScreen from '../screens/CapitulosScreen';
@@ -31,6 +32,7 @@ export default function RootNavigator() {
       ) : (
         <>
           <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Config" component={ConfigScreen} />
           <Stack.Screen name="Livros" component={LivrosScreen} />
           <Stack.Screen name="Capitulos" component={CapitulosScreen} />
           <Stack.Screen name="Leitura" component={LeituraScreen} />

@@ -2,16 +2,15 @@ import {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useTradition} from '../context/TraditionContext';
 import {livrosDaTradicao} from '../data/livros';
-import {VERSOES, versoesDaTradicao} from '../data/versoes';
+import {VERSOES} from '../data/versoes';
 import {getCapitulo, getCapitulos} from '../services/bibleService';
 import {colors, fonts, spacing, radius} from '../theme';
 import Screen from './Screen';
 
 export default function LeituraScreen({navigation, route}) {
-  const {tradicao} = useTradition();
+  const {tradicao, versaoId} = useTradition();
   const {livroId, capitulo: capituloInicial} = route.params;
   const livro = livrosDaTradicao(tradicao).find((item) => item.id === livroId);
-  const versaoId = versoesDaTradicao(tradicao)[0].id;
   const versao = VERSOES.find((item) => item.id === versaoId);
   const [capitulos, setCapitulos] = useState([]);
   const [capitulo, setCapitulo] = useState(capituloInicial);

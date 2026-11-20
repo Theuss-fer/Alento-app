@@ -3,6 +3,7 @@ import {StyleSheet, Text} from 'react-native';
 import Card from '../components/Card';
 import {useTradition} from '../context/TraditionContext';
 import {livrosDaTradicao} from '../data/livros';
+import {livroDisponivel} from '../services/bibleService';
 import {colors, spacing} from '../theme';
 import Screen from './Screen';
 
@@ -12,7 +13,7 @@ const SECOES = [
 ];
 
 export default function LivrosScreen({navigation}) {
-  const {tradicao} = useTradition();
+  const {tradicao, versaoId} = useTradition();
   const livros = livrosDaTradicao(tradicao);
 
   return (
@@ -30,6 +31,11 @@ export default function LivrosScreen({navigation}) {
               <Card
                 key={livro.id}
                 titulo={livro.nome}
+                sub={
+                  !livroDisponivel(versaoId, livro.id)
+                    ? 'Sem texto nesta versão'
+                    : undefined
+                }
                 onPress={() =>
                   navigation.navigate('Capitulos', {livroId: livro.id})
                 }

@@ -1,5 +1,6 @@
 import {createContext, useContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {TRADICOES, versoesDaTradicao} from '../data/versoes';
 
 const STORAGE_KEY = '@alento/preferencias';
 const TraditionContext = createContext(undefined);
@@ -16,24 +17,37 @@ export function useTradition() {
 
 export function TraditionProvider({children}) {
   const [tradicao, setTradicaoState] = useState(null);
+  const [versaoId, setVersaoIdState] = useState(null);
   const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
     let ativo = true;
 
-    async function carregarTradicao() {
+    async function carregarPreferencias() {
       try {
         const preferenciasSalvas = await AsyncStorage.getItem(STORAGE_KEY);
         if (!ativo) return;
 
         if (preferenciasSalvas) {
           const preferencias = JSON.parse(preferenciasSalvas);
-          if (preferencias && typeof preferencias.tradicao === 'string') {
-            setTradicaoState(preferencias.tradicao);
+          const tradicaoSalva = preferencias?.tradicao;
+          const tradicaoValida = TRADICOES.some(
+            (item) => item.id === tradicaoSalva,
+          );
+
+          if (tradicaoValida) {
+            const versoes = versoesDaTradicao(tradicaoSalva);
+            const versaoValida = versoes.some(
+              (versao) => versao.id === preferencias.versaoId,
+            );
+            setTradicaoState(tradicaoSalva);
+            setVersaoIdState(
+              versaoValida ? preferencias.versaoId : versoes[0]?.id ?? null,
+            );
           }
         }
       } catch (error) {
-        console.error('Não foi possível carregar a tradição salva.', error);
+        console.error('Não foi possível carregar as preferências salvas.', error);
       } finally {
         if (ativo) {
           setCarregando(false);
@@ -41,26 +55,39 @@ export function TraditionProvider({children}) {
       }
     }
 
-    carregarTradicao();
+    carregarPreferencias();
     return () => {
       ativo = false;
     };
   }, []);
 
-  async function setTradicao(novaTradicao) {
-    setTradicaoState(novaTradicao);
+  async function salvar(novaTradicao, novaVersaoId) {
     try {
       await AsyncStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({tradicao: novaTradicao}),
+        JSON.stringify({tradicao: novaTradicao, versaoId: novaVersaoId}),
       );
     } catch (error) {
-      console.error('Não foi possível salvar a tradição.', error);
+      console.error('Não foi possível salvar as preferências.', error);
     }
   }
 
+  async function setTradicao(novaTradicao) {
+    const novaVersaoId = versoesDaTradicao(novaTradicao)[0]?.id ?? null;
+    setTradicaoState(novaTradicao);
+    setVersaoIdState(novaVersaoId);
+    await salvar(novaTradicao, novaVersaoId);
+  }
+
+  async function setVersao(novaVersaoId) {
+    setVersaoIdState(novaVersaoId);
+    await salvar(tradicao, novaVersaoId);
+  }
+
   return (
-    <TraditionContext.Provider value={{carregando, tradicao, setTradicao}}>
+    <TraditionContext.Provider
+      value={{carregando, tradicao, setTradicao, versaoId, setVersao}}
+    >
       {children}
     </TraditionContext.Provider>
   );

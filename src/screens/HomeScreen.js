@@ -12,6 +12,10 @@ export default function HomeScreen({navigation}) {
         sub="Escolha um livro e um capítulo"
         onPress={() => navigation.navigate('Livros')}
       />
+      <Card
+        titulo="Configurações"
+        onPress={() => navigation.navigate('Config')}
+      />
     </Screen>
   );
 }

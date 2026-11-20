@@ -2,16 +2,14 @@ import {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useTradition} from '../context/TraditionContext';
 import {livrosDaTradicao} from '../data/livros';
-import {versoesDaTradicao} from '../data/versoes';
 import {getCapitulos} from '../services/bibleService';
 import {colors, radius, spacing} from '../theme';
 import Screen from './Screen';
 
 export default function CapitulosScreen({navigation, route}) {
-  const {tradicao} = useTradition();
+  const {tradicao, versaoId} = useTradition();
   const {livroId} = route.params;
   const livro = livrosDaTradicao(tradicao).find((item) => item.id === livroId);
-  const versaoId = versoesDaTradicao(tradicao)[0].id;
   const [capitulos, setCapitulos] = useState(null);
 
   useEffect(() => {
