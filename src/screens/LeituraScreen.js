@@ -1,11 +1,12 @@
 import {useEffect, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, ActivityIndicator} from 'react-native';
 import {useTradition} from '../context/TraditionContext';
 import {livrosDaTradicao} from '../data/livros';
 import {VERSOES} from '../data/versoes';
 import {getCapitulo, getCapitulos} from '../services/bibleService';
 import {colors, fonts, spacing, radius} from '../theme';
 import Screen from './Screen';
+
 
 export default function LeituraScreen({navigation, route}) {
   const {tradicao, versaoId} = useTradition();
@@ -59,7 +60,9 @@ export default function LeituraScreen({navigation, route}) {
       subtitulo={versao ? `${versao.nome} (${versao.sigla})` : ''}
       onBack={() => navigation.goBack()}
     >
-      {versiculos === undefined ? null : versiculos === null ? (
+      {versiculos === undefined ? (
+        <ActivityIndicator size="large" color={colors.primary} />
+      ) : versiculos === null ? (
         <Text style={styles.aviso}>Capítulo indisponível nesta versão.</Text>
       ) : (
         versiculos.map((v) => (
